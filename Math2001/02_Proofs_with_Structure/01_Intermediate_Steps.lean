@@ -23,36 +23,61 @@ example {m n : ℤ} (h1 : m + 3 ≤ 2 * n - 1) (h2 : n ≤ 5) : m ≤ 6 := by
 
 
 example {r s : ℚ} (h1 : s + 3 ≥ r) (h2 : s + r ≤ 3) : r ≤ 3 := by
-  have h3 : r ≤ 3 + s := by sorry -- justify with one tactic
-  have h4 : r ≤ 3 - s := by sorry -- justify with one tactic
+  -- we are introducing intermediate lemmas
+  have h3 : r ≤ 3 + s := by addarith [h1] -- justify with one tactic
+  have h4 : r ≤ 3 - s := by addarith [h2] -- justify with one tactic
   calc
-    r = (r + r) / 2 := by sorry -- justify with one tactic
-    _ ≤ (3 - s + (3 + s)) / 2 := by sorry -- justify with one tactic
-    _ = 3 := by sorry -- justify with one tactic
+    r = (r + r) / 2 := by ring -- justify with one tactic
+    _ ≤ (3 - s + (3 + s)) / 2 := by rel [h3, h4]  -- justify with one tactic
+    _ = 3 := by ring -- justify with one tactic
 
+
+/-
+Reasoning with intermediate steps -- cancelling terms (≠ 0)
+-/
 example {t : ℝ} (h1 : t ^ 2 = 3 * t) (h2 : t ≥ 1) : t ≥ 2 := by
   have h3 :=
   calc t * t = t ^ 2 := by ring
     _ = 3 * t := by rw [h1]
-  cancel t at h3
-  addarith [h3]
+  cancel t at h3 -- cancel t, secretly uses `h2` to make sure `t ≠ 0`
+  -- above step simply modifies `h3` to `t = 3`
+  -- we will do the last step manually without using addarith
+  -- addarith [h3]
+  calc
+    t = 3 := by rw [h3]
+    _ = 2 + 1 := by ring
+    _ ≥ 2 := by numbers
 
 
 example {a b : ℝ} (h1 : a ^ 2 = b ^ 2 + 1) (h2 : a ≥ 0) : a ≥ 1 := by
   have h3 :=
   calc
     a ^ 2 = b ^ 2 + 1 := by rw [h1]
-    _ ≥ 1 := by extra
+    _ ≥ 1 := by extra --- square of ℝ is nonnegative built-in
     _ = 1 ^ 2 := by ring
   cancel 2 at h3
 
 
 example {x y : ℤ} (hx : x + 3 ≤ 2) (hy : y + 2 * x ≥ 3) : y > 3 := by
-  sorry
+  have hx' : x ≤ -1 := by addarith [hx]
+  calc
+    y ≥ 3 - 2 * x := by addarith [hy]
+    _ ≥ 3 - 2 * -1 := by rel [hx']
+    _ = 5 := by ring
+    _ > 3 := by numbers
 
+-- TODO linarith tactic is disabled, so have to do this carefully
 example (a b : ℝ) (h1 : -b ≤ a) (h2 : a ≤ b) : a ^ 2 ≤ b ^ 2 := by
-  sorry
+  have h3 : b + a ≥ 0 := by addarith [h1]
+  have h4 : b - a ≥ 0 := by addarith [h2]
+  -- how to do this then ?
+  have h5 : (b - a) * (b + a) ≥ 0 := by sorry -- extra; rel [h3, h4];
+  calc
+    a ^ 2 = a * a  := by ring
+    _ ≤ a * a + (b - a)*(b + a) := by sorry -- rel [h5] -- we are just adding a nonnegative term
+    _ = b ^ 2 := by ring
 
+-- TODO
 example (a b : ℝ) (h : a ≤ b) : a ^ 3 ≤ b ^ 3 := by
   sorry
 
