@@ -5,3 +5,6 @@
 /build
 /.lake/
 /.cache
+
+#macOS
+.DS_Store
