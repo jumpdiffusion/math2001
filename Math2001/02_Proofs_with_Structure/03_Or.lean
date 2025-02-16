@@ -17,13 +17,19 @@ example {x y : ℝ} (h : x = 1 ∨ y = -1) : x * y + x = y + 1 := by
 
 example {n : ℕ} : n ^ 2 ≠ 2 := by
   have hn := le_or_succ_le n 1
-  obtain hn | hn := hn
+  obtain h1 | h2 := hn
   apply ne_of_lt
   calc
-    n ^ 2 ≤ 1 ^ 2 := by rel [hn]
+    n ^ 2 ≤ 1 ^ 2 := by rel [h1]
     _ < 2 := by numbers
-  sorry
+  apply ne_of_gt
+  calc
+    2 < 2 ^ 2 := by numbers
+    _ ≤ n ^ 2 := by rel [h2]
+    -- yay! first good proof in lean
 
+
+-- ∨ in goals is easy. you just prove one of the cases.
 example {x : ℝ} (hx : 2 * x + 1 = 5) : x = 1 ∨ x = 2 := by
   right
   calc
@@ -32,14 +38,30 @@ example {x : ℝ} (hx : 2 * x + 1 = 5) : x = 1 ∨ x = 2 := by
     _ = 2 := by numbers
 
 
+-- TODO understand a bit more.
+-- why did I need to write right after the calc block after left. Shouldn't it be inferred automatically?
 example {x : ℝ} (hx : x ^ 2 - 3 * x + 2 = 0) : x = 1 ∨ x = 2 := by
   have h1 :=
     calc
     (x - 1) * (x - 2) = x ^ 2 - 3 * x + 2 := by ring
     _ = 0 := by rw [hx]
   have h2 := eq_zero_or_eq_zero_of_mul_eq_zero h1
-  sorry
+  obtain hl | hr := h2
+  left
+  calc
+    x = x - 1 + 1 := by ring
+    _ = 0 + 1 := by rw [hl]
+    _ = 1 := by ring
+  right
+  calc
+    x = x - 2 + 2 := by ring
+    _ = 0 + 2 := by rw [hr]
+    _ = 2 := by ring
+  -- calc
+  --   x = 2 := by addarith [hr]
 
+
+-- TODO why centerdot ?
 example {n : ℤ} : n ^ 2 ≠ 2 := by
   have hn0 := le_or_succ_le n 0
   obtain hn0 | hn0 := hn0
@@ -67,12 +89,19 @@ example {n : ℤ} : n ^ 2 ≠ 2 := by
         (2:ℤ) < 2 ^ 2 := by numbers
         _ ≤ n ^ 2 := by rel [hn]
 
+-- name examples as theorems using `theorem` keyword
 
 /-! # Exercises -/
 
 
 example {x : ℚ} (h : x = 4 ∨ x = -4) : x ^ 2 + 1 = 17 := by
-  sorry
+  obtain hl | hl := h
+  calc
+    x ^ 2 + 1 = 4 ^ 2 + 1 := by rw [hl]
+    _ = 17 := by ring
+  calc
+    x ^ 2 + 1 = (-4) ^ 2 + 1 := by rw [hl]
+    _ = 17 := by ring
 
 example {x : ℝ} (h : x = 1 ∨ x = 2) : x ^ 2 - 3 * x + 2 = 0 := by
   sorry

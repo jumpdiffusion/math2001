@@ -5,13 +5,17 @@ import Library.Basic
 math2001_init
 
 
+-- notice the ⟨ ⟩ notation for deconstruction ∧
 example {x y : ℤ} (h : 2 * x - y = 4 ∧ y - x + 1 = 2) : x = 5 := by
-  obtain ⟨h1, h2⟩ := h
+  obtain ⟨h1, h2⟩ := h -- get the two parts of the conjunction
   calc
     x = 2 * x - y + (y - x + 1) - 1 := by ring
     _ = 4 + 2 - 1 := by rw [h1, h2]
     _ = 5 := by ring
 
+/-
+When a proof becomes this complicated, you may find it helpful to mark the start of each new sub-proof with the symbol `·`
+-/
 
 example {p : ℚ} (hp : p ^ 2 ≤ 8) : p ≥ -5 := by
   have hp' : -3 ≤ p ∧ p ≤ 3
@@ -20,7 +24,8 @@ example {p : ℚ} (hp : p ^ 2 ≤ 8) : p ≥ -5 := by
       p ^ 2 ≤ 9 := by addarith [hp]
       _ = 3 ^ 2 := by numbers
     numbers
-  sorry
+  obtain ⟨ h1, h2 ⟩  := hp'
+  addarith [h1] -- p ≥ -3 implies p ≥ -5
 
 example {a b : ℝ} (h1 : a - 5 * b = 4) (h2 : b + 2 = 3) : a = 9 ∧ b = 1 := by
   constructor
@@ -31,7 +36,9 @@ example {a b : ℝ} (h1 : a - 5 * b = 4) (h2 : b + 2 = 3) : a = 9 ∧ b = 1 := b
       _ = 9 := by ring
   · addarith [h2]
 
-
+/-
+the `constructor` tactic, which takes a problem in which the goal is an "and" statement, and reduces it two simpler tasks, one for each part of the "and".
+-/
 example {a b : ℝ} (h1 : a - 5 * b = 4) (h2 : b + 2 = 3) : a = 9 ∧ b = 1 := by
   have hb : b = 1 := by addarith [h2]
   constructor
@@ -39,7 +46,8 @@ example {a b : ℝ} (h1 : a - 5 * b = 4) (h2 : b + 2 = 3) : a = 9 ∧ b = 1 := b
       a = 4 + 5 * b := by addarith [h1]
       _ = 4 + 5 * 1 := by rw [hb]
       _ = 9 := by ring
-  · apply hb
+  · apply hb -- TODO why do we still need this. It is already proved as `hb` above.
+  -- we still have to apply
 
 
 example {a b : ℝ} (h1 : a ^ 2 + b ^ 2 = 0) : a = 0 ∧ b = 0 := by
@@ -49,7 +57,9 @@ example {a b : ℝ} (h1 : a ^ 2 + b ^ 2 = 0) : a = 0 ∧ b = 0 := by
       a ^ 2 ≤ a ^ 2 + b ^ 2 := by extra
       _ = 0 := by rw [h1]
     extra
-  sorry
+  constructor -- split the goal into two subgoals
+  . apply cancel a ^ 2 = 0 ^2
+
 
 /-! # Exercises -/
 
