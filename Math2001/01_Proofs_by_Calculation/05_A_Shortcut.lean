@@ -23,7 +23,11 @@ example {x y : ℚ} (hx : x = 2) (hy : y ^ 2 = -7) : x + y ^ 2 = -5 :=
 
 -- TODO how to do this without `addarith`?
 example {s t : ℝ} (h : t = 4 - s * t) : t + s * t > 0 :=
-  -- have h' : t  + s * t = 4 := by
+  -- partial substitution only for the first t?
+  have h' : t  + s * t = 4 := by
+    calc
+      nth_rewrite 1 h
+      ring
   calc
     -- t + s * t = (s + 1) * t := by ring
     -- _ = (s + 1) * ( 4 - s * t) := by rw [h] -- by addarith [h]

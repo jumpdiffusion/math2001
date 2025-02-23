@@ -12,7 +12,9 @@ example : (11 : ℕ) ∣ 88 := by
 
 
 example : (-2 : ℤ) ∣ 6 := by
-  sorry
+  dsimp [(· ∣ ·)]
+  use -3
+  ring
 
 example {a b : ℤ} (hab : a ∣ b) : a ∣ b ^ 2 + 2 * b := by
   obtain ⟨k, hk⟩ := hab

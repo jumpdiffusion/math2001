@@ -13,7 +13,8 @@ example : Odd (7 : ℤ) := by
 
 
 example : Odd (-3 : ℤ) := by
-  sorry
+  use -2
+  numbers
 
 example {n : ℤ} (hn : Odd n) : Odd (3 * n + 2) := by
   dsimp [Odd] at *
@@ -42,8 +43,14 @@ example {x y : ℤ} (hx : Odd x) (hy : Odd y) : Odd (x * y + 2 * y) := by
 example {m : ℤ} (hm : Odd m) : Even (3 * m - 5) := by
   sorry
 
+-- to write a lean proof, you better know how to prove it normally using pen and paper.
+-- may be I dont know know lean enough yet!
 example {n : ℤ} (hn : Even n) : Odd (n ^ 2 + 2 * n - 5) := by
-  sorry
+  obtain ⟨k, hk⟩ := hn
+  use 2 * k ^ 2 + 2 * k - 3
+  calc
+    n ^ 2 + 2 * n - 5 = (2 * k) ^ 2 + 2 * (2 * k) - 5 := by rw [hk]
+    _ = 2 * (2 * k ^ 2 + 2 * k - 3) + 1 := by ring
 
 example (n : ℤ) : Even (n ^ 2 + n + 4) := by
   obtain hn | hn := Int.even_or_odd n

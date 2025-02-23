@@ -38,7 +38,7 @@ example {x : ℝ} (hx : 2 * x + 1 = 5) : x = 1 ∨ x = 2 := by
     _ = 2 := by numbers
 
 
--- TODO understand a bit more.
+-- TODO Done understand a bit more.
 -- why did I need to write right after the calc block after left. Shouldn't it be inferred automatically?
 example {x : ℝ} (hx : x ^ 2 - 3 * x + 2 = 0) : x = 1 ∨ x = 2 := by
   have h1 :=
@@ -61,7 +61,7 @@ example {x : ℝ} (hx : x ^ 2 - 3 * x + 2 = 0) : x = 1 ∨ x = 2 := by
   --   x = 2 := by addarith [hr]
 
 
--- TODO why centerdot ?
+-- TODO Done why centerdot ?
 example {n : ℤ} : n ^ 2 ≠ 2 := by
   have hn0 := le_or_succ_le n 0
   obtain hn0 | hn0 := hn0

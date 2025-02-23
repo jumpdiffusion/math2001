@@ -71,13 +71,13 @@ example (a b : ℝ) (h1 : -b ≤ a) (h2 : a ≤ b) : a ^ 2 ≤ b ^ 2 := by
   have h3 : b + a ≥ 0 := by addarith [h1]
   have h4 : b - a ≥ 0 := by addarith [h2]
   -- how to do this then ?
-  have h5 : (b - a) * (b + a) ≥ 0 := by sorry -- extra; rel [h3, h4];
+  have h5 : (b - a) * (b + a) ≥ 0 := by extra
   calc
-    a ^ 2 = a * a  := by ring
-    _ ≤ a * a + (b - a)*(b + a) := by sorry -- rel [h5] -- we are just adding a nonnegative term
+    a ^ 2 = a * a + 0 := by ring
+    _ ≤ a * a + (b - a)*(b + a) := by rel [h5] -- we are just adding a nonnegative term
     _ = b ^ 2 := by ring
 
--- TODO
+--
 example (a b : ℝ) (h : a ≤ b) : a ^ 3 ≤ b ^ 3 := by
   sorry
 

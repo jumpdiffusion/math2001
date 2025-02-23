@@ -46,8 +46,9 @@ example {a b : ℝ} (h1 : a - 5 * b = 4) (h2 : b + 2 = 3) : a = 9 ∧ b = 1 := b
       a = 4 + 5 * b := by addarith [h1]
       _ = 4 + 5 * 1 := by rw [hb]
       _ = 9 := by ring
-  · apply hb -- TODO why do we still need this. It is already proved as `hb` above.
-  -- we still have to apply
+  . assumption
+  -- · apply hb --  why do we still need this. It is already proved as `hb` above.
+  -- Why do we still have to apply
 
 
 example {a b : ℝ} (h1 : a ^ 2 + b ^ 2 = 0) : a = 0 ∧ b = 0 := by
