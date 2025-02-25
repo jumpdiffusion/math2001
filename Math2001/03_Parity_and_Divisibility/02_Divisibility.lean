@@ -25,11 +25,18 @@ example {a b : ℤ} (hab : a ∣ b) : a ∣ b ^ 2 + 2 * b := by
 
 
 example {a b c : ℕ} (hab : a ∣ b) (hbc : b ^ 2 ∣ c) : a ^ 2 ∣ c := by
-  sorry
+  obtain ⟨k, hk⟩ := hab
+  obtain ⟨l, hl⟩ := hbc
+  use k ^ 2 * l
+  calc
+    c = b ^ 2 * l := by rw [hl]
+    _ = ( a * k) ^ 2 * l := by rw [hk]
+    _ = a ^ 2 * (k ^ 2 * l) := by ring
 
 example {x y z : ℕ} (h : x * y ∣ z) : x ∣ z := by
   sorry
 
+-- how to do this with euclidean division ?
 example : ¬(5 : ℤ) ∣ 12 := by
   apply Int.not_dvd_of_exists_lt_and_lt
   use 2

@@ -7,7 +7,7 @@ math2001_init
 
 namespace Int
 
-
+-- biimplication
 example {a : ℚ} : 3 * a + 1 ≤ 7 ↔ a ≤ 2 := by
   constructor
   · intro h

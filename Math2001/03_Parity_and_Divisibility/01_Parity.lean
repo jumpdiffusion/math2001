@@ -69,10 +69,14 @@ example (n : ℤ) : Even (n ^ 2 + n + 4) := by
 
 
 example : Odd (-9 : ℤ) := by
-  sorry
+  dsimp [Odd]
+  use -5
+  ring
 
 example : Even (26 : ℤ) := by
-  sorry
+  dsimp [Even]
+  use 13
+  ring
 
 example {m n : ℤ} (hm : Odd m) (hn : Even n) : Odd (n + m) := by
   sorry
