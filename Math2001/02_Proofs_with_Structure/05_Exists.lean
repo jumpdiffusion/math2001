@@ -8,7 +8,7 @@ math2001_init
 example {a : ℚ} (h : ∃ b : ℚ, a = b ^ 2 + 1) : a > 0 := by
   obtain ⟨b, hb⟩ := h
   calc
-    a = b ^ 2 + 1 := hb
+    a = b ^ 2 + 1 := by assumption -- hb
     _ > 0 := by extra
 
 
@@ -21,7 +21,18 @@ example {t : ℝ} (h : ∃ a : ℝ, a * t < 0) : t ≠ 0 := by
     cancel -x at hxt'
     apply ne_of_gt
     apply hxt'
-  · sorry
+  · have hx' : x > 0 := by addarith [hx]
+    have hxt' : x * (-t) > 0 := by
+      calc
+        x * (-t) = - (x * t) := by ring
+        _ > 0 := by addarith [hxt]
+        -- addarith [hxt]
+    cancel x at hxt'
+    apply ne_of_lt
+    calc
+      t = - (-t) := by ring
+      _ < 0 := by addarith [hxt']
+
 
 example : ∃ n : ℤ, 12 * n = 84 := by
   use 7
@@ -66,12 +77,19 @@ example : ∃ a b c d : ℕ,
 
 
 example : ∃ t : ℚ, t ^ 2 = 1.69 := by
-  sorry
+  use 13/10
+  numbers
+
+
 example : ∃ m n : ℤ, m ^ 2 + n ^ 2 = 85 := by
-  sorry
+  use 9, 2
+  numbers
+
 
 example : ∃ x : ℝ, x < 0 ∧ x ^ 2 < 1 := by
   sorry
+
+
 example : ∃ a b : ℕ, 2 ^ a = 5 * b + 1 := by
   sorry
 
