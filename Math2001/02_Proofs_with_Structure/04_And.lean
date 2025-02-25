@@ -58,8 +58,23 @@ example {a b : ℝ} (h1 : a ^ 2 + b ^ 2 = 0) : a = 0 ∧ b = 0 := by
       a ^ 2 ≤ a ^ 2 + b ^ 2 := by extra
       _ = 0 := by rw [h1]
     extra
+  have h3 : b ^ 2 = 0
+  . apply le_antisymm
+    calc
+      b ^ 2 ≤ a ^ 2 + b ^ 2 := by extra
+      _ = 0 := by rw [h1]
+    extra
   constructor -- split the goal into two subgoals
-  . apply cancel a ^ 2 = 0 ^2
+  . cancel 2 at h2 -- cancel 2 in the power
+  . cancel 2 at h3 -- cancel 2 in the power
+    -- calc
+    --   a ^ 2 = 0 := by rw [h2]
+    --   _ = 0 ^ 2 := by ring
+
+  -- . assumption -- this h2 now
+  -- . calc
+      -- a = 0 := by rw [eq_zero_of_sqr_eq_zero h2]
+
 
 
 /-! # Exercises -/
