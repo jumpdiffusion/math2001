@@ -70,7 +70,15 @@ def F : ℕ → ℤ
   | 1 => 1
   | n + 2 => F (n + 1) + F n
 
+#eval F 1
 
+#eval List.range 10
+
+#eval (List.range 10).map F
+
+#eval List.map F (List.range 5)
+
+-- amazing
 example (n : ℕ) : F n ≤ 2 ^ n := by
   two_step_induction n with k IH1 IH2
   · calc F 0 = 1 := by rw [F]

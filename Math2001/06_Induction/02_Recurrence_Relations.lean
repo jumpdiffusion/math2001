@@ -13,7 +13,7 @@ def a (n : ℕ) : ℕ := 2 ^ n
 
 #eval a 20 -- infoview displays `1048576`
 
-
+-- recursively defined sequence
 def b : ℕ → ℤ
   | 0 => 3
   | n + 1 => b n ^ 2 - 2
@@ -21,6 +21,8 @@ def b : ℕ → ℤ
 
 #eval b 7 -- infoview displays `316837008400094222150776738483768236006420971486980607`
 
+
+-- When a sequence is defined recursively, it is convenient to reason about it by induction.
 
 example (n : ℕ) : Odd (b n) := by
   simple_induction n with k hk
@@ -31,7 +33,7 @@ example (n : ℕ) : Odd (b n) := by
   · -- inductive step
     obtain ⟨x, hx⟩ := hk
     use 2 * x ^ 2 + 2 * x - 1
-    calc b (k + 1) = b k ^ 2 - 2 := by rw [b]
+    calc b (k + 1) = b k ^ 2 - 2 := by rw [b] -- here we are using `b` as a function
       _ = (2 * x + 1) ^ 2 - 2 := by rw [hx]
       _ = 2 * (2 * x ^ 2 + 2 * x - 1) + 1 := by ring
 
@@ -82,6 +84,10 @@ def factorial : ℕ → ℕ
   | n + 1 => (n + 1) * factorial n
 
 notation:10000 n "!" => factorial n
+
+#eval 1! -- 1
+#eval 2! -- 2
+#eval 3! -- 6
 
 
 example (n : ℕ) : ∀ d, 1 ≤ d → d ≤ n → d ∣ n ! := by

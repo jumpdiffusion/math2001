@@ -5,6 +5,9 @@ math2001_init
 
 namespace Nat
 
+-- Ch 7 is different
+-- just proves famous theorems in number theory
+-- short and sweet
 
 example (N : ℕ) : ∃ p ≥ N, Prime p := by
   have hN0 : 0 < N ! := by apply factorial_pos

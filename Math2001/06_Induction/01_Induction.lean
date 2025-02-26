@@ -8,6 +8,7 @@ math2001_init
 namespace Nat
 
 
+-- simple induction
 example (n : ℕ) : 2 ^ n ≥ n + 1 := by
   simple_induction n with k IH
   · -- base case

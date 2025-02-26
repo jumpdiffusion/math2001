@@ -7,7 +7,7 @@ math2001_init
 open Nat
 
 
-
+-- termination_by size function
 def pascal : ℕ → ℕ → ℕ
   | a, 0 => 1
   | 0, b + 1 => 1
