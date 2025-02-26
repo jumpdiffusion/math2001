@@ -36,9 +36,11 @@ example : Bijective (fun ((m, n) : ℤ × ℤ) ↦ (m + n, m + 2 * n)) := by
   rw [bijective_iff_exists_inverse]
   use fun (a, b) ↦ (2 * a - b, b - a)
   constructor
+  -- left inverse
   · ext ⟨m, n⟩
     dsimp
     ring
+  -- right inverse
   · ext ⟨a, b⟩
     dsimp
     ring

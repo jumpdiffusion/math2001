@@ -8,9 +8,17 @@ math2001_init
 open Set
 
 
+/-
+Lean is based on dependent type theory, so it is encouraged to think interms of
+types rather than sets unlike how it is done in mathematics.
+
+However sometimes sets cannot be avoided.
+-/
+
 #check {n : ℤ | n ≤ 3}
 
 
+-- same way you define sets in mathematics.
 example : 1 ∈ {n : ℤ | n ≤ 3} := by
   dsimp
   numbers
@@ -35,7 +43,7 @@ example : {a : ℕ | 4 ∣ a} ⊆ {b : ℕ | 2 ∣ b} := by
 
 
 example : {x : ℝ | 0 ≤ x ^ 2} ⊈ {t : ℝ | 0 ≤ t} := by
-  dsimp [Set.subset_def]
+  dsimp [Set.subset_def] -- looks like this is not optional
   push_neg
   use -3
   constructor

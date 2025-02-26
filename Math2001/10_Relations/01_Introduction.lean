@@ -6,6 +6,7 @@ import Library.Tactic.ModEq
 
 math2001_init
 
+-- this is a good review of relations for me.
 
 example : Reflexive ((·:ℕ) ∣ ·) := by
   dsimp [Reflexive]
@@ -27,7 +28,9 @@ example : ¬ Symmetric ((·:ℕ) ∣ ·) := by
     · numbers
     · numbers
 
-
+/-
+A relation ∼ on a set X is antisymmetric if ∀ x, y in X, if x ∼ y and y ∼ x, then x = y.
+-/
 example : AntiSymmetric ((·:ℕ) ∣ ·) := by
   have H : ∀ {m n}, m = 0 → m ∣ n → m = n
   · intro m n h1 h2

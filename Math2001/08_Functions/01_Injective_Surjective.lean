@@ -19,6 +19,7 @@ def F : ℕ → ℤ
 
 #eval F 5 -- infoview displays `8`
 
+#check F
 
 #check @F -- infoview displays `F : ℕ → ℤ`
 
@@ -38,7 +39,7 @@ example : Injective q := by
   dsimp [q] at h
   addarith [h]
 
-
+-- push neg inside..,
 example : ¬ Injective (fun x : ℝ ↦ x ^ 2) := by
   dsimp [Injective]
   push_neg
@@ -46,7 +47,7 @@ example : ¬ Injective (fun x : ℝ ↦ x ^ 2) := by
   constructor
   · numbers
   · numbers
-
+-- nice
 
 def s (a : ℚ) : ℚ := 3 * a + 2
 
@@ -67,7 +68,8 @@ example : ¬ Surjective (fun x : ℝ ↦ x ^ 2) := by
   calc -1 < 0 := by numbers
     _ ≤ x ^ 2 := by extra
 
-
+-- finite inductive type
+-- with check for equality ??
 inductive Musketeer
   | athos
   | porthos
@@ -82,24 +84,29 @@ def f : Musketeer → Musketeer
   | porthos => aramis
   | aramis => athos
 
-
+-- new tactic exhaust
+-- The tactic exhaust can do this kind of propositional logic reasoning, up to arbitrary complexity.
 example : ¬ Injective f := by
   dsimp [Injective]
   push_neg
   use athos, porthos
   dsimp [f] -- optional
   exhaust
+-- this exhaust tactic seems very useful.
 
 
+-- checking when some function is not surjective
 example : ¬ Surjective f := by
   dsimp [Surjective]
   push_neg
   use porthos
   intro a
+  -- We can case-check on a variable `a` in a finite inductive type using the tactic cases.
   cases a
   · exhaust
   · exhaust
   · exhaust
+
 
 
 -- better (more automated) version of the previous proof

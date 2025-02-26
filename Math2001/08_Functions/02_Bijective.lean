@@ -65,12 +65,12 @@ def f : Celestial → Subatomic
 example : ¬ Bijective f := by
   dsimp [Bijective]
   push_neg
-  right
+  right -- select the right disjunct
   dsimp [Surjective]
   push_neg
   use neutron
   intro x
-  cases x <;> exhaust
+  cases x <;> exhaust -- exhaust tactic can only handle variable free goals
 
 
 example {f : X → Y} : Bijective f ↔ ∀ y, ∃! x, f x = y := by

@@ -6,6 +6,12 @@ math2001_init
 
 open Set Function
 
+/-
+X : Type
+collection of all sets in X : \mathcal{P}(X)
+
+In set theory this is called the powerset of X
+-/
 
 #check {3, 4, 5} -- `{3, 4, 5} : Set ℕ`
 #check {n : ℕ | 8 < n} -- `{n | 8 < n} : Set ℕ`

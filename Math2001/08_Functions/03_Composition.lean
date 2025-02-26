@@ -13,6 +13,9 @@ def f (a : ℝ) : ℝ := a + 3
 def g (b : ℝ) : ℝ := 2 * b
 def h (c : ℝ) : ℝ := 2 * c + 6
 
+/-
+--  To prove two functions are equal, we have to show that they are equal on every input. This is what the tactic ext does. (The name stands for “extensionality”.)
+-/
 example : g ∘ f = h := by
   ext x
   calc (g ∘ f) x = g (f x) := by rfl
