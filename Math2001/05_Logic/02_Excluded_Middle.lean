@@ -69,6 +69,7 @@ example : ∃ k : ℕ, Superpowered k ∧ ¬ Superpowered (k + 1) := by
     · apply h2
 
 
+-- this uses the law of excluded middle ???
 example {P : Prop} (hP : ¬¬P) : P := by
   by_cases hP : P
   · apply hP

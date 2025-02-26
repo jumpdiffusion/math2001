@@ -20,6 +20,7 @@ example (P Q : Prop) : P → (P ∨ ¬ Q) := by
 #truth_table ¬(P ∧ ¬ Q)
 
 
+-- left keyword for the left part of proposition
 example (P : Prop) : (P ∨ P) ↔ P := by
   constructor
   · intro h
@@ -45,10 +46,13 @@ example (P Q R : Prop) : (P ∧ (Q ∨ R)) ↔ ((P ∧ Q) ∨ (P ∧ R)) := by
       · apply h2
   · sorry
 
+-- but two statements in propositional logic are logically equivalent if and only if they have the same truth table.
+-- this is not proved in this book.
 #truth_table P ∧ (Q ∨ R)
 #truth_table (P ∧ Q) ∨ (P ∧ R)
 
-
+-- P, Q are predicates
+-- Statements about quantified predicates are sometimes referred to as first-order logic.
 example {P Q : α → Prop} (h1 : ∀ x : α, P x) (h2 : ∀ x : α, Q x) :
     ∀ x : α, P x ∧ Q x := by
   intro x

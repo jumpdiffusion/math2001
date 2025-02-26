@@ -7,7 +7,8 @@ math2001_init
 
 namespace Int
 
-
+-- how to prove uniqueness of solutions of an equation
+-- lean is an interactive theorem prover so we have to step through the proof
 example : ∃! a : ℝ, 3 * a + 1 = 7 := by
   use 2
   dsimp
